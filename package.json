@@ -1,0 +1,28 @@
+{
+  "name": "oss-nodejs-sdk",
+  "version": "1.0.0",
+  "description": "oss sdk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KelvinKey/OSS-NodeJS-SDK.git"
+  },
+  "author": [
+    {
+      "name": "kelvinkey",
+      "email": "kelvinkeyss@yahoo.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KelvinKey/OSS-NodeJS-SDK/issues"
+  },
+  "homepage": "https://github.com/KelvinKey/OSS-NodeJS-SDK#readme",
+  "dependencies": {
+    "ali-oss": "^6.1.1",
+    "fs": "0.0.1-security"
+  }
+}
