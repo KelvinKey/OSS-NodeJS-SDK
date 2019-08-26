@@ -6,7 +6,6 @@ const fs = require('fs');
 
 const client = new oss(config);
 
-
 const Oss = {
 
     /** put
@@ -15,9 +14,9 @@ const Oss = {
      */
     put: async ($src, $file) => {
         try {
-            return await client.put($src, $file);
+            console.log(await client.put($src, $file));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
 
@@ -27,9 +26,9 @@ const Oss = {
      */
     putBuffer: async ($src, $content) => {
         try {
-            return await client.put($src, new Buffer($content));
+            console.log(await client.put($src, new Buffer($content)));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
 
@@ -39,9 +38,9 @@ const Oss = {
      */
     append: async ($src, $file) => {
         try {
-            return await client.append($src, $file);
+            console.log(await client.append($src, $file));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
 
@@ -52,13 +51,52 @@ const Oss = {
      */
     putStream: async ($src, $file, $chunked = false) => {
         try {
-            console.log( await client.putStream($src, fs.createReadStream($file), $chunked ? { contentLength: fs.statSync($file).size } : {}))
+            console.log(await client.putStream($src, fs.createReadStream($file), $chunked ? { contentLength: fs.statSync($file).size } : {}));
         } catch (err) {
-            console.log( err);
+            console.log(err);
         }
-    }
+    },
+
+    /** multipartUpload  
+     * @param string $src
+     * @param string $file
+     */
+    multipartUpload: async ($src, $file) => {
+        try {
+            console.log(await client.multipartUpload($src, $file, {
+                progress: async bar => { console.log('-------------' + parseInt(bar * 100) + '%') }
+            }));
+
+            console.log(await client.head($src));
+
+        }
+        catch (err) {
+            err.code === 'ConnectionTimeoutError' ? console.log("Woops,超时啦!") : console.log(err);
+        }
+    },
+
+    /** resumeUpload  
+     * @param string $src
+     * @param string $file
+     * @param int $parallel
+     */
+    resumeUpload: async ($src, $file, $parallel = 2) => {
+        try {
+            console.log(await client.multipartUpload($src, $file, {
+                parallel: $parallel,
+                checkpoint: Oss.point,
+                progress: async (bar, checkpoint, res) => {
+                    Oss.point = checkpoint;
+                    console.log('-------------' + parseInt(bar * 100) + '%')
+                }
+            }));
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    /**记录断点*/
+    point: null
 
 }
 
-
-Oss.putStream('/uploadFiles', 'uploadFiles.js', false);
+module.exports = Oss;

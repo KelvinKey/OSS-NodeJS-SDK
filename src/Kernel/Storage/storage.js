@@ -12,9 +12,9 @@ const Oss = {
      */
     putBucket: async $name => {
         try {
-            return await client.putBucket($name);
+            console.log(await client.putBucket($name));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
     /** listBuckets
@@ -22,9 +22,9 @@ const Oss = {
      */
     listBuckets: async ($prefix = '') => {
         try {
-            return await client.listBuckets($prefix.trim() !== "" ? { prefix: $prefix } : {});
+            console.log(await client.listBuckets($prefix.trim() !== "" ? { prefix: $prefix } : {}));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
 
@@ -33,9 +33,9 @@ const Oss = {
      */
     deleteBucket: async $name => {
         try {
-            return await client.deleteBucket($name);
+            console.log(await client.deleteBucket($name));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
 
@@ -44,10 +44,10 @@ const Oss = {
      */
     putBucketACL: async $name => {
         try {
-            return await client.putBucketACL($name);
+            console.log(await client.putBucketACL($name));
 
         } catch (err) {
-            return err;
+            console.log(err);
         }
     },
 
@@ -56,9 +56,9 @@ const Oss = {
      */
     putBucketACL: async ($name, $acl = 'private') => {
         try {
-            return await client.putBucketACL($name, $acl);
+            console.log(await client.putBucketACL($name, $acl));
         } catch (err) {
-            return err;
+            console.log(err);
         }
     }
 
