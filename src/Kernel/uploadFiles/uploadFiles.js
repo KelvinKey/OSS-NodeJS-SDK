@@ -95,7 +95,23 @@ const Oss = {
         }
     },
     /**记录断点*/
-    point: null
+    point: null,
+
+    /**上传文件到指定目录
+     * @param string $src
+     * @param string $file
+     */
+    multipartUpload: async ($src, $file) => {
+        await client.multipartUpload('base-dir/' + $src, $file, {
+            progress: async pro => {
+                console.log('Progress: %s', pro);
+            }
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
 }
 
